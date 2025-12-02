@@ -9,7 +9,9 @@ I do not describe some details that are not important to me. I am only intereste
 * [nice_nano_RGB](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/nice_nano_RGB)
 * [kabarga](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/kabarga)
 * [PNCATEHO MK Dose](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/pncateho_mk_dose)
+* [mouse](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/mouse) 
 
+The mouse config was originally published [here](https://github.com/greengrocer98/Adafruit_nRF52_Bootloader/commit/b9c9ca6f4b4f314b8ebd4e130bb9b60f82ed159d).
 
 ## Burn & Upgrade with pre-built binaries
 In most cases, you just need to connect the keyboard to your computer, double-press the MCU reset button, and copy the UF2 bootloader file to the newly appeared device. If you need to flash the bootloader using a programmer, follow this [guide](https://github.com/joric/nrfmicro/wiki/Bootloader#swd-programmers).
