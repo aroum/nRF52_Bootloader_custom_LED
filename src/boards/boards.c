@@ -411,7 +411,9 @@ void led_tick(void) {
   #if LED_STATE_ON == 1
   duty_cycle = 0xff - duty_cycle;
   #endif
-  led_pwm_duty_cycle(LED_TERTIARY, duty_cycle);
+  #if defined(LED_TERTIARY)
+    led_pwm_duty_cycle(LED_TERTIARY, duty_cycle);
+  #endif
   #endif
 }
 
