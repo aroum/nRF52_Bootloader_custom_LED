@@ -302,7 +302,17 @@ endif
 
 # Defined Symbol (MACROS)
 CFLAGS += -D__HEAP_SIZE=0
+
+
+# Define a list of BOARDS for which the flag is NEEDED (i.e., not DFU)
+# We exclude all names that end in "_DFU"
+NON_DFU_BOARDS := $(filter-out %_DFU,$(BOARD))
+
+# If the BOARD variable does not end with "_DFU",
+# then $(NON_DFU_BOARDS) will be equal to $(BOARD) (not empty)
+ifeq ($(NON_DFU_BOARDS),$(BOARD))
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+endif
 
 # Skip defining CONFIG_NFCT_PINS_AS_GPIOS if the device uses the NFCT.
 ifneq ($(USE_NFCT),yes)
