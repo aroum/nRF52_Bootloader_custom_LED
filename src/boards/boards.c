@@ -80,8 +80,10 @@ void board_init(void) {
 
 #if LEDS_NUMBER > 0
   // enable leds ldo
-  nrf_gpio_cfg_output(LDO_PIN);
-  nrf_gpio_pin_write(LDO_PIN, 1);
+  #if defined(LDO_PIN)
+    nrf_gpio_cfg_output(LDO_PIN);
+    nrf_gpio_pin_write(LDO_PIN, 1);
+  #endif
   // use PMW0 for LED RED
   led_pwm_init(LED_PRIMARY, LED_PRIMARY_PIN);
 #if LEDS_NUMBER > 1
