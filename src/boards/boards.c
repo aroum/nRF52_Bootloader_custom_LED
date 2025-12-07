@@ -89,10 +89,8 @@ void board_init(void) {
 #if LEDS_NUMBER > 1
   led_pwm_init(LED_SECONDARY, LED_SECONDARY_PIN);
 #endif
-#if LEDS_NUMBER > 2
-  #if defined(LED_TERTIARY)
-    led_pwm_init(LED_TERTIARY, LED_TERTIARY_PIN);
-  #endif
+#if LEDS_NUMBER > 2 && defined(LED_TERTIARY)
+    led_pwm_duty_cycle(LED_TERTIARY, duty_cycle);
 #endif
 #endif
 
