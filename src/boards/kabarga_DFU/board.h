@@ -22,46 +22,46 @@
  * THE SOFTWARE.
  */
 
- #ifndef _KABARGADFU_H
- #define _KABARGADFU_H
- 
- #define _PINNUM(port, pin)    ((port)*32 + (pin))
- 
- #define UICR_REGOUT0_VALUE UICR_REGOUT0_VOUT_3V3
- 
- /*------------------------------------------------------------------*/
- /* LED
-  *------------------------------------------------------------------*/
- #define LEDS_NUMBER       2
- #define LED_PRIMARY_PIN   _PINNUM(0, 10) // 2
- #define LED_SECONDARY_PIN _PINNUM(1, 11) // 3
- #define LED_STATE_ON      1
-  
- /*------------------------------------------------------------------*/
- /* BUTTON
-  *------------------------------------------------------------------*/
- #define BUTTONS_NUMBER    2  // none connected at all
- #define BUTTON_1          _PINNUM(0, 19)  // unusable: RESET
- #define BUTTON_2          _PINNUM(0, 18)  // no connection
- #define BUTTON_PULL       NRF_GPIO_PIN_PULLUP
- 
- //--------------------------------------------------------------------+
- // BLE OTA
- //--------------------------------------------------------------------+
- #define BLEDIS_MANUFACTURER  "Aroum"
- #define BLEDIS_MODEL         "Kabarga_DFU"
- 
- //--------------------------------------------------------------------+
- // USB
- //--------------------------------------------------------------------+
- #define USB_DESC_VID           0x239A
- #define USB_DESC_UF2_PID       0x00B3
- #define USB_DESC_CDC_ONLY_PID  0x00B3
- 
- #define UF2_PRODUCT_NAME  "Kabarga_DFU"
- #define UF2_VOLUME_LABEL  "KABARGA_DFU"
- #define UF2_BOARD_ID      "nRF52840-nicenano"
- #define UF2_INDEX_URL     "https://github.com/aroum/kabarga"
- 
- #endif // _KABARGA_H
- 
+#ifndef _KABARGADFU_H
+#define _KABARGADFU_H
+
+#define _PINNUM(port, pin)    ((port)*32 + (pin))
+
+#define UICR_REGOUT0_VALUE UICR_REGOUT0_VOUT_3V3
+#define CONFIG_GPIO_AS_PINRESET 0
+
+/*------------------------------------------------------------------*/
+/* LED
+ *------------------------------------------------------------------*/
+#define LEDS_NUMBER 2
+#define LED_PRIMARY_PIN _PINNUM(0, 10)   // 2
+#define LED_SECONDARY_PIN _PINNUM(1, 11) // 3
+#define LED_STATE_ON 1
+
+/*------------------------------------------------------------------*/
+/* BUTTON
+ *------------------------------------------------------------------*/
+#define BUTTONS_NUMBER 2        // none connected at all
+#define BUTTON_1 _PINNUM(0, 19) // unusable: RESET
+#define BUTTON_2 _PINNUM(0, 18) // no connection
+#define BUTTON_PULL NRF_GPIO_PIN_PULLUP
+
+//--------------------------------------------------------------------+
+// BLE OTA
+//--------------------------------------------------------------------+
+#define BLEDIS_MANUFACTURER "Aroum"
+#define BLEDIS_MODEL "Kabarga_DFU"
+
+//--------------------------------------------------------------------+
+// USB
+//--------------------------------------------------------------------+
+#define USB_DESC_VID 0x239A
+#define USB_DESC_UF2_PID 0x00B3
+#define USB_DESC_CDC_ONLY_PID 0x00B3
+
+#define UF2_PRODUCT_NAME "Kabarga_DFU"
+#define UF2_VOLUME_LABEL "KABARGA_DFU"
+#define UF2_BOARD_ID "nRF52840-nicenano"
+#define UF2_INDEX_URL "https://github.com/aroum/kabarga"
+
+#endif // _KABARGA_H
