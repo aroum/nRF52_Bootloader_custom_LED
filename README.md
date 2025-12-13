@@ -175,7 +175,7 @@ The following changes must be applied to the bootloader's build configuration fi
 
 | File Path                           | Modification                                                                 |
 | ----------------------------------- | ---------------------------------------------------------------------------- |
-| `src/yourboard/board.h`             | Add the following directives to override the configuration:                  |
+| `src/boards/yourboard/board.h`             | Add the following directives to override the configuration:                  |
 | `Makefile`                          | Remove the line defining the CFLAG for the reset configuration:              |
 | `/lib/tinyusb/hw/bsp/nrf/family.mk` | Remove the line defining the CFLAG within this submodule's build definition: |
 
