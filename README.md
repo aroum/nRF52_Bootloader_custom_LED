@@ -157,6 +157,8 @@ l)))/ifneq (,$(filter 12.% 13.% 14.% 15.%,$(shell \$(CC) -dumpversion 2>\/dev\/n
 
 [original issues](https://github.com/adafruit/Adafruit_nRF52_Bootloader/issues/339)
 
+---
+
 ## nRF52 P0.18 Pin Reassignment: Enabling GPIO Functionality on the Reset Pin
 
 The P0.18 pin on the nRF52 series microcontrollers is typically configured as the dedicated Pin Reset input. However, its functionality is configurable via the `CONFIG_GPIO_AS_PINRESET` register, allowing it to be used as a standard General Purpose I/O (GPIO) pin.
@@ -209,7 +211,7 @@ Once `CONFIG_GPIO_AS_PINRESET` is disabled, P0.18 can be configured within the
 
 **Mechanism:** If P0.18 is tied to ground when power is applied to the microcontroller, the system will enter the flashing mode instead of running the application firmware.
 
-## 3. P0.18 Usage in ZMK (Standard GPIO)
+### 3. P0.18 Usage in ZMK (Standard GPIO)
 
 When configured as a GPIO, P0.18 becomes available for general purposes within ZMK, such as:
 
