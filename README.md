@@ -5,6 +5,7 @@ This repository is a fork of the official Adafruit repository. My keyboards use 
 I do not describe some details that are not important to me. I am only interested in building UF2 bootloaders for nRF52 locally in Fedora or using GitHub Actions.
 
 ## My configs
+
 * [nice_nano_LED](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/nice_nano_LED)
 * [nice_nano_RGB](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/nice_nano_RGB)
 * [kabarga](https://github.com/aroum/nRF52_Bootloader_custom_LED/tree/master/src/boards/kabarga)
@@ -14,6 +15,7 @@ I do not describe some details that are not important to me. I am only intereste
 The mouse config was originally published [here](https://github.com/greengrocer98/Adafruit_nRF52_Bootloader/commit/b9c9ca6f4b4f314b8ebd4e130bb9b60f82ed159d).
 
 ## Burn & Upgrade with pre-built binaries
+
 In most cases, you just need to connect the keyboard to your computer, double-press the MCU reset button, and copy the UF2 bootloader file to the newly appeared device. If you need to flash the bootloader using a programmer, follow this [guide](https://github.com/joric/nrfmicro/wiki/Bootloader#swd-programmers).
 
 ## How to build
@@ -38,6 +40,7 @@ with
 #ifndef _KABARGA_H  
 #define _KABARGA_H  
 ```
+
 At the bottom of the file, you can change the device name.
 
 Finally, build your bootloader using the command:
@@ -94,7 +97,7 @@ sudo dnf install python3-pip gcc-arm-none-eabi make arm-none-eabi-newlib arm-non
 pip3 install --user adafruit-nrfutil intelhex
 ```
 
-### Build:
+### Build
 
 Firstly clone this repo with following commands
 
@@ -119,6 +122,7 @@ You must provide a BOARD parameter with 'BOARD='
 Supported boards are: feather_nrf52840_express feather_nrf52840_express pca10056
 Makefile:90: *** BOARD not defined.  Stop
 ```
+
 Here, {board} matches the name of the configuration folder in `src/boards/{board}`.
 
 The bootloader file can be found here: `_build/build-kabarga/update-kabarga_bootloader-XXX.uf2`
@@ -161,6 +165,8 @@ l)))/ifneq (,$(filter 12.% 13.% 14.% 15.%,$(shell \$(CC) -dumpversion 2>\/dev\/n
 
 ## nRF52 P0.18 Pin Reassignment: Enabling GPIO Functionality on the Reset Pin
 
+![pic](reset_to_gpio.png)
+
 The P0.18 pin on the nRF52 series microcontrollers is typically configured as the dedicated Pin Reset input. However, its functionality is configurable via the `CONFIG_GPIO_AS_PINRESET` register, allowing it to be used as a standard General Purpose I/O (GPIO) pin.
 
 This document details the procedure and constraints involved in enabling P0.18 as a GPIO pin for use in custom firmware, such as ZMK.
@@ -177,7 +183,7 @@ The following changes must be applied to the bootloader's build configuration fi
 
 | File Path                           | Modification                                                                 |
 | ----------------------------------- | ---------------------------------------------------------------------------- |
-| `src/boards/yourboard/board.h`             | Add the following directives to override the configuration:                  |
+| `src/boards/yourboard/board.h`      | Add the following directives to override the configuration:                  |
 | `Makefile`                          | Remove the line defining the CFLAG for the reset configuration:              |
 | `/lib/tinyusb/hw/bsp/nrf/family.mk` | Remove the line defining the CFLAG within this submodule's build definition: |
 
@@ -215,9 +221,9 @@ Once `CONFIG_GPIO_AS_PINRESET` is disabled, P0.18 can be configured within the
 
 When configured as a GPIO, P0.18 becomes available for general purposes within ZMK, such as:
 
-- Switching Bluetooth profiles.
-- Battery charge indication.
-- Triggering deep sleep mode.
+* Switching Bluetooth profiles.
+* Battery charge indication.
+* Triggering deep sleep mode.
 
 ### 4. Limitations and Workarounds
 
@@ -225,16 +231,16 @@ When configured as a GPIO, P0.18 becomes available for general purposes within Z
 
 Using P0.18 as a DFU trigger imposes a significant constraint on its ability to wake the microcontroller from deep sleep:
 
-- **Conflict:** If P0.18 is configured as a simple external wake-up pin (shorting it to ground to wake the MCU), the action of grounding the pin will instead initiate DFU mode, preventing the application from resuming.
-- **Exception (Matrix):** This issue does not apply if P0.18 is used as a column or row pin within a keyboard matrix, as the matrix logic handles the pin state.
+* **Conflict:** If P0.18 is configured as a simple external wake-up pin (shorting it to ground to wake the MCU), the action of grounding the pin will instead initiate DFU mode, preventing the application from resuming.
+* **Exception (Matrix):** This issue does not apply if P0.18 is used as a column or row pin within a keyboard matrix, as the matrix logic handles the pin state.
 
 #### Programmatic DFU Function Removal
 
 To fully utilize P0.18 for deep sleep wake-up while retaining the modified bootloader:
 
-- Use the `&bootloader` node configuration within ZMK's device tree.
-- The ZMK application can then programmatically override and disable the DFU trigger functionality associated with P0.18.
-- This allows the pin to be used reliably as a full-featured GPIO, including waking the MCU from deep sleep.
+* Use the `&bootloader` node configuration within ZMK's device tree.
+* The ZMK application can then programmatically override and disable the DFU trigger functionality associated with P0.18.
+* This allows the pin to be used reliably as a full-featured GPIO, including waking the MCU from deep sleep.
 
 ### 5. Board-Specific Notes (e.g., n!n v2)
 
@@ -242,8 +248,8 @@ On certain custom PCBs, such as the n!n v2, the P0.14, P0.16, and P0.18 pins are
 
 ### 6. Flashing and Deployment
 
-- Due to the deep modifications made to the bootloader's configuration registers, the following deployment steps are mandatory:
-- Local Compilation: The modified bootloader must be compiled locally to ensure the changes are correctly integrated.
-- Using a Programmer: Flashing must be performed using a hardware programmer (e.g., J-Link, ST-Link).
-- File Selection: The required .hex file is located in the build/yourboard/ directory. Select the file with the longest filename (this typically corresponds to the final, complete bootloader image).
-- UF2 Restriction: Flashing the bootloader via .uf2 files will not correctly rewrite the necessary configuration registers, thus failing to enable P0.18 as a GPIO pin. A hardware programmer must be used.
+* Due to the deep modifications made to the bootloader's configuration registers, the following deployment steps are mandatory:
+* Local Compilation: The modified bootloader must be compiled locally to ensure the changes are correctly integrated.
+* Using a Programmer: Flashing must be performed using a hardware programmer (e.g., J-Link, ST-Link).
+* File Selection: The required .hex file is located in the build/yourboard/ directory. Select the file with the longest filename (this typically corresponds to the final, complete bootloader image).
+* UF2 Restriction: Flashing the bootloader via .uf2 files will not correctly rewrite the necessary configuration registers, thus failing to enable P0.18 as a GPIO pin. A hardware programmer must be used.
